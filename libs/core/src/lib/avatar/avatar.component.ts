@@ -8,11 +8,9 @@ import {
     OnInit,
     ViewEncapsulation
 } from '@angular/core';
-import { applyCssClass, CssClassBuilder } from '../utils/public_api';
+import { applyCssClass, ColorAccent, CssClassBuilder, Size } from '../utils/public_api';
 import { ANY_LANGUAGE_LETTERS_REGEX } from '../utils/consts';
 
-export type AvatarSize = 'xs' | 's' | 'm' | 'l' | 'xl';
-export type ColorAccent = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 let avatarUniqueId = 0;
 
 @Component({
@@ -52,7 +50,14 @@ export class AvatarComponent implements OnChanges, OnInit, CssClassBuilder {
     }
 
     /** The size of the Avatar. Options include: *xs*, *s*, *m*, *l* and *xl*. */
-    @Input() size: AvatarSize = 'l';
+    @Input() size: Size = 'l';
+    /*@Input()
+    set size(value: Size) {
+        this._size = value || 'l';
+    }
+    get size(): Size {
+        return this._size;
+    }*/
 
     /** The glyph name. */
     @Input() glyph: string = null;
@@ -77,6 +82,14 @@ export class AvatarComponent implements OnChanges, OnInit, CssClassBuilder {
 
     /** A number from 1 to 10 representing the background color of the Avatar. */
     @Input() colorAccent: ColorAccent = null;
+
+    /*@Input()
+    set colorAccent(value: ColorAccent) {
+        this._colorAccent = value;
+    }
+    get colorAccent(): ColorAccent {
+        return this._colorAccent;
+    }*/
 
     /**
      * @deprecated
@@ -114,6 +127,12 @@ export class AvatarComponent implements OnChanges, OnInit, CssClassBuilder {
 
     /** @hidden */
     private _image: string = null;
+
+    /** @hidden */
+    private _size: Size = null;
+
+    /** @hidden */
+    private _colorAccent: ColorAccent = null;
 
     /** @hidden */
     private _bgImage: string = null;

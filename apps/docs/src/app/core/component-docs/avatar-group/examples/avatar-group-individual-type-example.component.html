@@ -1,0 +1,50 @@
+<fd-avatar-group type="individual" [size]="size1" overflowButtonColor="random">
+    <ng-container *ngFor="let person of people">
+        <div fd-avatar-group-item>
+            <fd-popover>
+                <fd-popover-control>
+                    <fd-avatar [circle]="true" [size]="size1" *ngIf="!person.imageUrl && !person.glyph" [label]="person.firstName + ' ' + person.lastName"></fd-avatar>
+                    <fd-avatar [circle]="true" [size]="size1" *ngIf="person.imageUrl" [image]="person.imageUrl"></fd-avatar>
+                    <fd-avatar [circle]="true" [size]="size1" *ngIf="person.glyph" [glyph]="person.glyph"></fd-avatar>
+                </fd-popover-control>
+                <fd-popover-body>
+                    <fd-quick-view [id]="person.id">
+                        <fd-quick-view-title align="middle">Business card</fd-quick-view-title>
+
+                        <fd-quick-view-subheader>
+                            <fd-avatar [circle]="true" [size]="size1" *ngIf="!person.imageUrl && !person.glyph" [label]="person.firstName + ' ' + person.lastName"></fd-avatar>
+                            <fd-avatar [circle]="true" [size]="size1" *ngIf="person.imageUrl" [image]="person.imageUrl"></fd-avatar>
+                            <fd-avatar [circle]="true" [size]="size1" *ngIf="person.glyph" [glyph]="person.glyph"></fd-avatar>
+                            <fd-quick-view-subheader-title>{{ person.firstName }} {{ person.lastName }}</fd-quick-view-subheader-title>
+                            <fd-quick-view-subheader-subtitle>{{ person.position }}</fd-quick-view-subheader-subtitle>
+                        </fd-quick-view-subheader>
+
+                        <fd-quick-view-group>
+                            <fd-quick-view-group-title>Contact Details</fd-quick-view-group-title>
+                            <fd-quick-view-group-item>
+                                <fd-quick-view-group-item-label>Phone</fd-quick-view-group-item-label>
+                                <fd-quick-view-group-item-content>
+                                    <a [href]="'tel:' + person.phone" [innerText]="person.phone" fd-link></a>
+                                </fd-quick-view-group-item-content>
+                            </fd-quick-view-group-item>
+
+                            <fd-quick-view-group-item>
+                                <fd-quick-view-group-item-label>Mobile</fd-quick-view-group-item-label>
+                                <fd-quick-view-group-item-content>
+                                    <a [href]="'tel:' + person.mobile" [innerText]="person.mobile" fd-link></a>
+                                </fd-quick-view-group-item-content>
+                            </fd-quick-view-group-item>
+
+                            <fd-quick-view-group-item>
+                                <fd-quick-view-group-item-label>Email</fd-quick-view-group-item-label>
+                                <fd-quick-view-group-item-content>
+                                    <a [href]="'mailto:' + person.email" [innerText]="person.email" fd-link></a>
+                                </fd-quick-view-group-item-content>
+                            </fd-quick-view-group-item>
+                        </fd-quick-view-group>
+                    </fd-quick-view>
+                </fd-popover-body>
+            </fd-popover>
+        </div>
+    </ng-container>
+</fd-avatar-group>

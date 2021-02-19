@@ -1,0 +1,141 @@
+<!--
+<div #avatarGroupContainer>
+    &lt;!&ndash; INDIVIDUAL TYPE &ndash;&gt;
+    <ng-container *ngIf="isIndividualType">
+        <pre>individual</pre>
+        <div [class]="rootClassNames"
+             [id]="id"
+             [attr.aria-label]="ariaLabel"
+             #avatarGroupRootIndividual>
+            <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+            <fd-popover
+                #insertBeforeIndividual
+                *ngIf="_overflowElements"
+                placement="bottom-end"
+                [noArrow]="true"
+                class="fd-popover">
+                <fd-popover-control>
+                    <ng-container *ngTemplateOutlet="overflowButtonTemplate"></ng-container>
+                </fd-popover-control>
+                <fd-popover-body>
+                    <ng-container *ngTemplateOutlet="overflowBodyTemplate"></ng-container>
+                </fd-popover-body>
+            </fd-popover>
+        </div>
+    </ng-container>
+
+    &lt;!&ndash; GROUP TYPE &ndash;&gt;
+    <ng-container *ngIf="isGroupType">
+        <pre>group</pre>
+        <fd-popover
+            placement="bottom"
+            [noArrow]="true"
+            class="fd-popover"
+            role="button"
+            tabindex="0">
+            <fd-popover-control>
+                <div [class]="rootClassNames"
+                     [id]="id"
+                     [attr.aria-label]="ariaLabel"
+                     #avatarGroupRootGroup>
+                    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+                    <ng-container *ngIf="_overflowElements">
+                        <ng-container *ngTemplateOutlet="overflowButtonTemplate"></ng-container>
+                    </ng-container>
+                </div>
+            </fd-popover-control>
+            <fd-popover-body>
+                <ng-container *ngTemplateOutlet="overflowBodyTemplate"></ng-container>
+            </fd-popover-body>
+        </fd-popover>
+    </ng-container>
+</div>
+-->
+
+
+
+
+
+<div #avatarGroupContainer>
+    <!-- GROUP TYPE -->
+    <ng-container *ngIf="isGroupType">
+        <pre>group marker | normal – {{ _normalElements.length }} | overflow – {{ _overflowElements.length }}</pre>
+
+        <fd-popover placement="bottom"
+                    class="fd-popover"
+                    role="button"
+                    tabindex="0">
+            <fd-popover-control>
+                <div [class]="rootClassNames"
+                     [id]="id"
+                     [attr.aria-label]="ariaLabel"
+                     #insertToGroup>
+                    <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+                    <ng-container *ngIf="overflowVisibility | async">
+                        <ng-container *ngTemplateOutlet="overflowButtonTemplate"></ng-container>
+                    </ng-container>
+                </div>
+            </fd-popover-control>
+            <fd-popover-body>
+                <ng-container *ngTemplateOutlet="overflowBodyTemplate"></ng-container>
+            </fd-popover-body>
+        </fd-popover>
+    </ng-container>
+
+    <!-- INDIVIDUAL TYPE -->
+    <ng-container *ngIf="isIndividualType">
+        <pre>individual marker | normal – {{ _normalElements.length }} | overflow – {{ _overflowElements.length }}</pre>
+
+        <div [class]="rootClassNames"
+             [id]="id"
+             [attr.aria-label]="ariaLabel"
+             #insertToIndividual>
+            <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+            <ng-container *ngIf="overflowVisibility | async">
+                <fd-popover placement="bottom" class="fd-popover">
+                    <fd-popover-control>
+                        <ng-container *ngTemplateOutlet="overflowButtonTemplate"></ng-container>
+                    </fd-popover-control>
+                    <fd-popover-body>
+                        <ng-container *ngTemplateOutlet="overflowBodyTemplate"></ng-container>
+                    </fd-popover-body>
+                </fd-popover>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>
+
+
+
+
+
+
+
+<!-- TEMPLATES -->
+<ng-template #contentTemplate><ng-content></ng-content></ng-template>
+
+<ng-template #overflowButtonTemplate>
+    <button *ngIf="overflowVisibility | async"
+            fd-button
+            [attr.aria-label]="'+' + this._overflowElements.length"
+            [class]="moreButtonClassNames"
+            #overflowButton>
+        <bdi class="fd-button__text fd-avatar-group__button-text">+{{ this._overflowElements.length }}</bdi>
+    </button>
+</ng-template>
+
+<ng-template #overflowBodyTemplate>
+    <div class="fd-popover__wrapper">
+        <div fd-popover-body-header>
+            <div fd-bar>
+                <div fd-bar-middle>
+                    <fd-bar-element>Team Members ({{ _overflowElements.length }})</fd-bar-element>
+                </div>
+            </div>
+        </div>
+
+        <div class="fd-avatar-group__overflow--body" #overflowBody>
+            <pre>overflowBody {{ random }}</pre>
+        </div>
+    </div>
+</ng-template>
