@@ -83,6 +83,7 @@ import { ObjectNumberModule } from './object-number/object-number.module';
 import { TitleModule } from './title/title.module';
 import { SliderModule } from './slider/public_api';
 import { OnlyDigitsModule } from './utils/directives/only-digits/only-digits.module';
+import { StatusIndicatorModule } from './status-indicator/status-indicator.module';
 
 @NgModule({
     imports: [CommonModule, FormsModule],
@@ -166,8 +167,9 @@ import { OnlyDigitsModule } from './utils/directives/only-digits/only-digits.mod
         MessageToastModule,
         DynamicSideContentModule,
         SliderModule,
-        OnlyDigitsModule
+        OnlyDigitsModule,
+        StatusIndicatorModule
     ],
-    providers: [AlertService, DialogService, NotificationService, MessageToastService, ThemesService],
+    providers: [AlertService, DialogService, NotificationService, MessageToastService, ThemesService]
 })
-export class FundamentalNgxCoreModule { }
+export class FundamentalNgxCoreModule {}
