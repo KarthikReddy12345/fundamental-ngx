@@ -57,6 +57,7 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
     @Input()
     type: InputType;
 
+    /**boolean type represents the focus set for the respective multi input */
     @Input()
     autofocus: boolean;
 
@@ -131,17 +132,28 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
     private _direction: Direction = 'ltr';
 
     constructor(
-        /** @hidden */ readonly cd: ChangeDetectorRef,
-        /** @hidden */ readonly elementRef: ElementRef,
-        /** @hidden */ @Optional() @Self() readonly ngControl: NgControl,
-        /** @hidden */ @Optional() @Self() readonly ngForm: NgForm,
-        /** @hidden */ @Optional() readonly dialogConfig: DialogConfig,
-        /** @hidden */ readonly _dynamicComponentService: DynamicComponentService,
-        /** @hidden */ @Optional() @Inject(DATA_PROVIDERS) private providers: Map<string, DataProvider<any>>,
-        /** @hidden */ readonly _listConfig: ListConfig,
-        /** @hidden */ private _rtlService: RtlService,
-        /** @hidden */ @Optional() @SkipSelf() @Host() formField: FormField,
-        /** @hidden */ @Optional() @SkipSelf() @Host() formControl: FormFieldControl<any>
+        /** @hidden */
+        readonly cd: ChangeDetectorRef,
+        /** @hidden */
+        readonly elementRef: ElementRef,
+        /** @hidden */
+        @Optional() @Self() readonly ngControl: NgControl,
+        /** @hidden */
+        @Optional() @Self() readonly ngForm: NgForm,
+        /** @hidden */
+        @Optional() readonly dialogConfig: DialogConfig,
+        /** @hidden */
+        readonly _dynamicComponentService: DynamicComponentService,
+        /** @hidden */
+        @Optional() @Inject(DATA_PROVIDERS) private providers: Map<string, DataProvider<any>>,
+        /** @hidden */
+        readonly _listConfig: ListConfig,
+        /** @hidden */
+        private _rtlService: RtlService,
+        /** @hidden */
+        @Optional() @SkipSelf() @Host() formField: FormField,
+        /** @hidden */
+        @Optional() @SkipSelf() @Host() formControl: FormFieldControl<any>
     ) {
         super(cd, elementRef, ngControl, ngForm, dialogConfig, _listConfig, formField, formControl);
     }

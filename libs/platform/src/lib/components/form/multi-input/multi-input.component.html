@@ -68,6 +68,8 @@
                 [attr.aria-expanded]="isOpen && _suggestions.length > 0"
                 [readonly]="readonly"
                 [attr.aria-readonly]="readonly"
+                [attr.aria-label]="ariaLabel"
+                [attr.aria-labelledby]="ariaLabelledBy"
                 autofocus="autofocus"
             />
         </fd-tokenizer>

@@ -292,14 +292,22 @@ export abstract class BaseMultiInput extends CollectionBaseInput implements Afte
     };
 
     constructor(
-        /** @hidden */ readonly cd: ChangeDetectorRef,
-        /** @hidden */ protected readonly elementRef: ElementRef,
-        /** @hidden */ @Optional() @Self() readonly ngControl: NgControl,
-        /** @hidden */ @Optional() @Self() readonly ngForm: NgForm,
-        /** @hidden */ @Optional() readonly dialogConfig: DialogConfig,
-        /** @hidden */ protected listConfig: ListConfig,
-        /** @hidden */ @Optional() @SkipSelf() @Host() formField: FormField,
-        /** @hidden */ @Optional() @SkipSelf() @Host() formControl: FormFieldControl<any>
+        /** @hidden */
+        readonly cd: ChangeDetectorRef,
+        /** @hidden */
+        protected readonly elementRef: ElementRef,
+        /** @hidden */
+        @Optional() @Self() readonly ngControl: NgControl,
+        /** @hidden */
+        @Optional() @Self() readonly ngForm: NgForm,
+        /** @hidden */
+        @Optional() readonly dialogConfig: DialogConfig,
+        /** @hidden */
+        protected listConfig: ListConfig,
+        /** @hidden */
+        @Optional() @SkipSelf() @Host() formField: FormField,
+        /** @hidden */
+        @Optional() @SkipSelf() @Host() formControl: FormFieldControl<any>
     ) {
         super(cd, ngControl, ngForm, formField, formControl);
     }
