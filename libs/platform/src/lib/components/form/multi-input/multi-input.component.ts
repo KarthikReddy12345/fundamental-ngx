@@ -23,13 +23,7 @@ import {
     TemplateRef
 } from '@angular/core';
 import { NgControl, NgForm } from '@angular/forms';
-import {
-    TokenizerComponent,
-    KeyUtil,
-    DialogConfig,
-    DynamicComponentService,
-    RtlService
-} from '@fundamental-ngx/core';
+import { TokenizerComponent, KeyUtil, DialogConfig, DynamicComponentService, RtlService } from '@fundamental-ngx/core';
 
 import { Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -59,10 +53,12 @@ import { MULTIINPUT_COMPONENT } from './multi-input.interface';
     ]
 })
 export class PlatformMultiInputComponent extends BaseMultiInput implements OnInit, AfterViewInit {
-
     /** type Represent the type of input used for the multi Input */
     @Input()
     type: InputType;
+
+    @Input()
+    autofocus: boolean;
 
     @ViewChild(ListComponent)
     listTemplateDD: ListComponent;
@@ -87,7 +83,8 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
     get isGroup(): boolean {
         return !!(this.group && this.groupKey);
     }
-    /** Whether the input is disabled. */
+    /** @hidden
+     * Whether the input is disabled. */
     protected _disabled = false;
 
     @Input()
@@ -125,24 +122,26 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
     @ViewChild(CdkConnectedOverlay)
     _connectedOverlay: CdkConnectedOverlay;
 
+    /** @hidden */
     public updateSelectedListVariables = [];
+    /** @hidden */
     private _dataSourceSubscription = Subscription.EMPTY;
 
     /** @hidden */
     private _direction: Direction = 'ltr';
 
     constructor(
-        readonly cd: ChangeDetectorRef,
-        readonly elementRef: ElementRef,
-        @Optional() @Self() readonly ngControl: NgControl,
-        @Optional() @Self() readonly ngForm: NgForm,
-        @Optional() readonly dialogConfig: DialogConfig,
-        readonly _dynamicComponentService: DynamicComponentService,
-        @Optional() @Inject(DATA_PROVIDERS) private providers: Map<string, DataProvider<any>>,
-        readonly _listConfig: ListConfig,
-        private _rtlService: RtlService,
-        @Optional() @SkipSelf() @Host() formField: FormField,
-        @Optional() @SkipSelf() @Host() formControl: FormFieldControl<any>
+        /** @hidden */ readonly cd: ChangeDetectorRef,
+        /** @hidden */ readonly elementRef: ElementRef,
+        /** @hidden */ @Optional() @Self() readonly ngControl: NgControl,
+        /** @hidden */ @Optional() @Self() readonly ngForm: NgForm,
+        /** @hidden */ @Optional() readonly dialogConfig: DialogConfig,
+        /** @hidden */ readonly _dynamicComponentService: DynamicComponentService,
+        /** @hidden */ @Optional() @Inject(DATA_PROVIDERS) private providers: Map<string, DataProvider<any>>,
+        /** @hidden */ readonly _listConfig: ListConfig,
+        /** @hidden */ private _rtlService: RtlService,
+        /** @hidden */ @Optional() @SkipSelf() @Host() formField: FormField,
+        /** @hidden */ @Optional() @SkipSelf() @Host() formControl: FormFieldControl<any>
     ) {
         super(cd, elementRef, ngControl, ngForm, dialogConfig, _listConfig, formField, formControl);
     }
@@ -172,8 +171,12 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
         if (this.mobile) {
             this._setUpMobileMode();
         }
-    }
 
+        if (this.autofocus) {
+            this.searchInputElement.nativeElement.focus();
+        }
+    }
+    /** @hidden */
     addToArray($select: any): void {
         const index = this.selected.findIndex((selectvalue) => selectvalue.label === $select.label);
         if (index === -1) {
@@ -184,7 +187,7 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
         this._cd.detectChanges();
     }
 
-    /**
+    /** @hidden
      * Control Value Accessor
      */
     writeValue(value: any[]): void {
@@ -201,6 +204,7 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
         this.selectionMode = 'delete';
         this._cd.markForCheck();
     }
+    /** @hidden */
     deleteToken(selectedValue): void {
         if (this.tokenizer.tokenList.length > 0) {
             this.tokenizer.tokenList.forEach((token) => {
@@ -215,7 +219,7 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
         }
         this._cd.markForCheck();
     }
-
+    /** @hidden */
     removeToken(token): void {
         this.selected.splice(this.selected.indexOf(token), 1);
         this._updateModel(this.selected);
@@ -320,7 +324,7 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
             { injector: Injector.create({ providers: [{ provide: MULTIINPUT_COMPONENT, useValue: this }] }) }
         );
     }
-    /** Handle dialog dismissing, closes popover and sets backup data. */
+    /** @hidden Handle dialog dismissing, closes popover and sets backup data. */
     dialogDismiss(term: string): void {
         if (this.selectedValue && term !== this.selectedValue.label) {
             this.selectedValue = this._getSelectedOptionItem(term);
@@ -330,7 +334,7 @@ export class PlatformMultiInputComponent extends BaseMultiInput implements OnIni
         this.showList(false);
     }
 
-    /** Handle dialog approval, closes popover and propagates data changes. */
+    /** @hidden Handle dialog approval, closes popover and propagates data changes. */
     dialogApprove(): void {
         if (this.selected && this.selectedValue.label === this.inputText) {
             this._updateModel(this.selectedValue.value);

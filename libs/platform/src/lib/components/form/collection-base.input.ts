@@ -35,7 +35,7 @@ export abstract class CollectionBaseInput extends BaseInput {
      */
     @Input()
     displayKey: string;
-
+    /** @hidden */
     protected lookupValue(item: any): string {
         if (isSelectItem(item)) {
             return this.lookupKey && item ? item.value[this.lookupKey] : item.value;
@@ -43,7 +43,7 @@ export abstract class CollectionBaseInput extends BaseInput {
             return this.lookupKey && item ? item[this.lookupKey] : item;
         }
     }
-
+    /** @hidden */
     protected displayValue(item: any): string {
         if (isSelectItem(item)) {
             return item.label;
@@ -55,7 +55,7 @@ export abstract class CollectionBaseInput extends BaseInput {
             return item;
         }
     }
-
+    /** @hidden */
     protected objectGet(obj: any, is: string | string[]): any {
         if (!isJsObject(obj)) {
             return obj;
