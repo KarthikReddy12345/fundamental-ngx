@@ -66,7 +66,7 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
     statusLabel: string;
 
     /**
-     * positioning of the status indicator.
+     * positioning of the status indicator image withing the defined height and width .
      */
     @Input()
     viewBox: string;
@@ -87,7 +87,7 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
     @Input()
     ariaLabel: string = null;
 
-    /** Aria roleDescription for the Status Indicator. */
+    /** Aria defines role description for the Status Indicator. */
     @Input()
     ariaRoledescription: string = null;
 
@@ -99,11 +99,11 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
     @Input()
     role: string = null;
 
-    /** Aria ValueText for the Status Indicator. */
+    /** Aria Value Text for the Status Indicator. */
     @Input()
     ariaValuetext: string = null;
 
-    /** Aria Title for the Status Indicator. */
+    /** Aria title for the status indicator. */
     @Input()
     title: string = null;
 
@@ -159,8 +159,7 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
     x2: string;
     /** @hidden */
     y2: string;
-
-    @Input()
+    /** @hidden */
     pointsArray: any[] = [];
 
     /** @hidden */
@@ -182,11 +181,19 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
     elementRef(): ElementRef<HTMLElement> {
         return this._elementRef;
     }
+
+    /** @hidden */
     calculateFilling(): number {
-        this.fillCalculator = (this.fillPercentage * this.path.length) / 100;
+        if (this.fillPercentage < 0 || this.fillPercentage === undefined) {
+            this.fillCalculator = 0;
+        } else {
+            this.fillCalculator = (this.fillPercentage * this.path.length) / 100;
+        }
+
         return this.fillCalculator;
     }
 
+    /** @hidden */
     angleCalculation(): void {
         let sPointsAttributeValue: Array<Points>;
         let polygonPoints: string;
@@ -221,6 +228,7 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
         }
     }
 
+    /** @hidden */
     convertAngleToBinary(angle: number): string {
         if (angle > 0 && angle <= 45) {
             return '1,0,0,1';
@@ -244,6 +252,8 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
             return 'invalid';
         }
     }
+
+    /** @hidden */
     assignBinaryValue(binaryString: string): void {
         let binaryValue = [];
         binaryValue = binaryString.split(',');
@@ -253,10 +263,12 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
         this.y2 = binaryValue[3];
     }
 
+    /** @hidden */
     _createPoint(iX, iY): Points {
         return { x: iX, y: iY };
     }
 
+    /** @hidden */
     _getPolygonPointsForCircularFilling(iValue, _oBoundingBoxSvg): Array<Points> {
         const that = this;
         const iAngle = 3.6 * iValue;
