@@ -18,6 +18,11 @@ export type LablePosition = 'left' | 'right' | 'top' | 'bottom';
 export type FillingType = 'radial' | 'angled' | 'linearup' | 'lineardown' | 'linearleft';
 export type FillingDirection = 'clock' | 'anticlock';
 
+export interface Points {
+    x: number;
+    y: number;
+}
+
 @Component({
     selector: 'fd-status-indicator',
     templateUrl: './status-indicator.component.html',
@@ -183,8 +188,8 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
     }
 
     angleCalculation(): void {
-        let sPointsAttributeValue = [];
-        let polygonPoints: any[];
+        let sPointsAttributeValue: Array<Points>;
+        let polygonPoints: string;
         if (this.fillingType === 'angled') {
             this.binaryString = this.convertAngleToBinary(this.angle);
             this.assignBinaryValue(this.binaryString);
@@ -248,11 +253,11 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
         this.y2 = binaryValue[3];
     }
 
-    _createPoint(iX, iY): any {
+    _createPoint(iX, iY): Points {
         return { x: iX, y: iY };
     }
 
-    _getPolygonPointsForCircularFilling(iValue, _oBoundingBoxSvg): any {
+    _getPolygonPointsForCircularFilling(iValue, _oBoundingBoxSvg): Array<Points> {
         const that = this;
         const iAngle = 3.6 * iValue;
         const oBox = _oBoundingBoxSvg;
@@ -265,7 +270,7 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
         const oCentrePoint = this._createPoint(oBox.x + oBox.width / 2, oBox.y + oBox.height / 2);
 
         // Reflects x coordinate by centre point for Counter Clockwise type
-        function adjustIfCounterClockwise(oPoint): any {
+        function adjustIfCounterClockwise(oPoint): Points {
             const oResult = Object.assign({}, oPoint);
 
             if (that.fillDirection === 'anticlock') {
@@ -279,7 +284,7 @@ export class StatusIndicatorComponent implements OnChanges, OnInit, AfterViewIni
         // Boundary centre is given by angle distance from the beginning (0°). The returned difference is related
         // to x or y coordinate depending on boundary centre angle (e.g. 0° -> x, 90° -> y, 180° -> x  270° -> y).
         // Boundary length is length of the corresponding side of bounding box (width for x, height for y).
-        function computeDifferenceFromBoundaryCentre(inAngle, iBoundaryCentreAngle, iBoundaryLength): any {
+        function computeDifferenceFromBoundaryCentre(inAngle, iBoundaryCentreAngle, iBoundaryLength): number {
             const tan = Math.tan(((iBoundaryCentreAngle - inAngle) * Math.PI) / 180);
 
             return (tan * iBoundaryLength) / 2;
